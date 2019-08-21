@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     func encodeDataInJWT()
     {
         
-        let alg = JWTAlgorithm.hs256("secret")
+        let alg = JWTAlgorithm.hs256("kBj92ySJaVshpJQYv8EQU1sPRXvaqa4jZfMHdjJVgAhQY7sn6elmr8bxQ1v6a5OP")
 //        let headerWithKeyId = JWTHeader.init(keyId: "testKeyId")
         var payload = JWTPayload()
         payload.expiration = 515616187993
@@ -32,17 +32,18 @@ class ViewController: UIViewController {
         payload.subject = "shuo"
         payload.customFields = ["email": EncodableValue(value: "chetan@user.com"),
                                 "password": EncodableValue(value: "password")]
-       
+
         let jwtWithKeyId = JWT.init(payload: payload, algorithm: alg)
         print(jwtWithKeyId?.rawString ?? "")
         
+         guard let jwtString = jwtWithKeyId?.rawString else { return  }
+        //let jwtString = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTU2NjM5MTM1NSwiZXhwIjoxNTY2Mzk0OTU1LCJuYmYiOjE1NjYzOTEzNTUsImp0aSI6IlFKUFVya0NBbFptcExPRlQiLCJzdWIiOjcsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.ojw-ATIX2A13UNCG8noe6W2Js5Qma2vHJ_bJoowoB28"
         
-        guard let jwtString = jwtWithKeyId?.rawString else { return  }
-        let alg1 = JWTAlgorithm.hs256("secret")
+        let alg1 = JWTAlgorithm.hs256("kBj92ySJaVshpJQYv8EQU1sPRXvaqa4jZfMHdjJVgAhQY7sn6elmr8bxQ1v6a5OP")
         let jwt = try? JWT.init(algorithm: alg1, rawString: jwtString)
         let payload1 = jwt?.payload
         do {
-            try payload1?.checkExpiration(allowNil: false)
+            try payload1?.checkExpiration(allowNil: true)
             try payload1?.checkSubject(expected: "shuo")
             try payload1?.checkIssuer(expected: "yufu")
             if let enco = jwt?.payload.customFields?["email"]{
