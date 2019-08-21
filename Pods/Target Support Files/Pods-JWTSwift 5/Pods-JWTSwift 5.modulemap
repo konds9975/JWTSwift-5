@@ -1,0 +1,6 @@
+framework module Pods_JWTSwift_5 {
+  umbrella header "Pods-JWTSwift 5-umbrella.h"
+
+  export *
+  module * { export * }
+}

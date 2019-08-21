@@ -1,0 +1,6 @@
+framework module Pods_JWTSwift_5UITests {
+  umbrella header "Pods-JWTSwift 5UITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
